@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del archivo</title>
+</head>
+<body>
+    <h1>Detalles de los archivos cargados</h1>
+    <% fileDetails.forEach(fileInfo => { %>
+        <ul>
+            <li><strong>Nombre:</strong> <%= fileInfo.filename %></li>
+            <li><strong>Nombre original:</strong> <%= fileInfo.name %></li>
+            <li><strong>Tamaño:</strong> <%= fileInfo.size %> bytes</li>
+            <li><strong>Tipo:</strong> <%= fileInfo.type %></li>
+        </ul>
+        <hr>
+    <% }); %>
+</body>
+</html>
