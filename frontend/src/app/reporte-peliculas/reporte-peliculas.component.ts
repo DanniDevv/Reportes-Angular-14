@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-
+import * as XLSX from 'xlsx'; // Librería para Excel
+import * as Papa from 'papaparse';
 @Component({
   selector: 'app-reporte-peliculas',
   templateUrl: './reporte-peliculas.component.html',
@@ -46,13 +47,24 @@ export class ReportePeliculasComponent implements OnInit {
     const estilos = {
       header: {
         fontSize: 18,
-        bold: true
+        bold: true,
+        alignment: 'center',
+        color: '#3498db' // Color de texto
+      },
+      tableHeader: {
+        bold: true,
+        fontSize: 12,
+        color: '#ffffff', // Color de fondo
+        fillColor: '#ecf0f1' // Color de la celda
+      },
+      tableBody: {
+        fontSize: 10
       }
     };
 
     const documentDefinition = {
       content: contenido,
-      styles: estilos
+      styles: estilos as any
     };
 
     pdfMake.createPdf(documentDefinition).open();
@@ -69,4 +81,38 @@ export class ReportePeliculasComponent implements OnInit {
   obtenerGeneros() {
     return Array.from(new Set(this.peliculas.map(pelicula => pelicula.genero)));
   }
+
+  exportarExcel() {
+    const data = this.peliculasFiltradas.map(pelicula => ({
+      'Título': pelicula.titulo,
+      'Género': pelicula.genero,
+      'Año de lanzamiento': pelicula.lanzamiento.toString()
+    }));
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'InformePeliculas');
+    XLSX.writeFile(wb, 'InformePeliculas.xlsx');
+  }
+
+  exportarCSV() {
+    const csv = Papa.unparse(this.peliculasFiltradas.map(pelicula => ({
+      'Título': pelicula.titulo,
+      'Género': pelicula.genero,
+      'Año de lanzamiento': pelicula.lanzamiento.toString()
+    })));
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'InformePeliculas.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }
 }
+
