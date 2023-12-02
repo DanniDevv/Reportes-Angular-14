@@ -18,7 +18,7 @@
     pnpm start
   ```
   ![Alt text](img/backend1.png)
-  ![Alt text](image.png)
+  ![Alt text](img/backend2.png)
   # Frontend
   ## Instalar Cliente
   ```
