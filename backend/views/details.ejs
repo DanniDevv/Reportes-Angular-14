@@ -4,17 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del archivo</title>
+    <!-- Agregamos la referencia a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Detalles de los archivos cargados</h1>
-    <% fileDetails.forEach(fileInfo => { %>
-        <ul>
-            <li><strong>Nombre:</strong> <%= fileInfo.filename %></li>
-            <li><strong>Nombre original:</strong> <%= fileInfo.name %></li>
-            <li><strong>Tamaño:</strong> <%= fileInfo.size %> bytes</li>
-            <li><strong>Tipo:</strong> <%= fileInfo.type %></li>
-        </ul>
-        <hr>
-    <% }); %>
+    <div class="container">
+        <h1>Detalles de los archivos cargados</h1>
+        <% fileDetails.forEach(fileInfo => { %>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre: <%= fileInfo.filename %></h5>
+                    <p class="card-text"><strong>Nombre original:</strong> <%= fileInfo.name %></p>
+                    <p class="card-text"><strong>Tamaño:</strong> <%= fileInfo.size %> bytes</p>
+                    <p class="card-text"><strong>Tipo:</strong> <%= fileInfo.type %></p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+    <!-- Agregamos la referencia a Bootstrap JS (opcional) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

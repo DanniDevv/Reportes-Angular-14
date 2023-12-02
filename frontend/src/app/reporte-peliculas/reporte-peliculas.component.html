@@ -1,30 +1,35 @@
-<div>
+<div class="filter-container">
   <label for="filtroGenero">Filtrar por Género:</label>
   <select id="filtroGenero" [(ngModel)]="filtroGenero" (change)="aplicarFiltros()">
     <option value="">Todos</option>
     <option *ngFor="let genero of generos" [value]="genero">{{ genero }}</option>
   </select>
 </div>
-<div>
+
+<div class="filter-container">
   <label for="filtroAnio">Filtrar por Año de Lanzamiento:</label>
   <input type="number" id="filtroAnio" [(ngModel)]="filtroAnio" (change)="aplicarFiltros()">
 </div>
 
-<table>
-  <!-- Encabezados de la tabla... -->
-  <!-- Filas de la tabla... -->
-  <tr>
-    <th>Título</th>
-    <th>Género</th>
-    <th>Año de lanzamiento</th>
-  </tr>
+<table class="movie-table">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Género</th>
+      <th>Año de lanzamiento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pelicula of peliculasFiltradas">
+      <td>{{ pelicula.titulo }}</td>
+      <td>{{ pelicula.genero }}</td>
+      <td>{{ pelicula.lanzamiento }}</td>
+    </tr>
+  </tbody>
+</table>
 
-  <tr *ngFor="let pelicula of peliculasFiltradas">
-    <td>{{ pelicula.titulo }}</td>
-    <td>{{ pelicula.genero }}</td>
-    <td>{{ pelicula.lanzamiento }}</td>
-  </tr>
-
-  <button (click)="generarPDF()">Generar PDF</button>
-  <button (click)="exportarExcel()">Exportar a Excel</button>
-  <button (click)="exportarCSV()">Exportar a CSV</button></table>
+<div class="button-container">
+  <button class="action-button" (click)="generarPDF()">Generar PDF</button>
+  <button class="action-button" (click)="exportarExcel()">Exportar a Excel</button>
+  <button class="action-button" (click)="exportarCSV()">Exportar a CSV</button>
+</div>

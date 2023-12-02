@@ -43,6 +43,9 @@ const upload = multer({
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'assets')));
+
 app.post('/upload', upload.array('files', 5), (req, res) => {
     if (!req.files || req.files.length === 0) {
         return res.status(400).send('No se ha seleccionado ningún archivo');
@@ -60,10 +63,11 @@ app.post('/upload', upload.array('files', 5), (req, res) => {
     res.render('details', { fileDetails });
 });
 
-app.listen(3000, () => {
-    console.log('Servidor escuchando en el puerto 3000');
-});
-
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.listen(3000, () => {
+    console.log('Servidor escuchando en el puerto 3000');
+    console.log('URL => http://localhost:3000');
 });

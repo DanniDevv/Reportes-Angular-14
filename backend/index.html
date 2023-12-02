@@ -1,13 +1,62 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Carga de archivos</title>
-  </head>
-  <body>
+<html lang="es">
+<head>
+  <title>Carga de archivos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Agregamos la referencia a Bootstrap CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
     <h1>Carga de archivos</h1>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" name="files" multiple />
-      <input type="submit" value="Cargar" />
+    <form action="/upload" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="files">Seleccionar archivos</label>
+        <input type="file" class="form-control-file" name="files" id="files" multiple onchange="validateFiles()">
+        <small id="fileSizeError" class="text-danger"></small>
+      </div>
+      <button type="submit" class="btn btn-primary" id="uploadButton" disabled>Cargar</button>
     </form>
-  </body>
+  </div>
+
+  <!-- Agregamos la referencia a Bootstrap JS (opcional) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script>
+    function validateFiles() {
+      const fileInput = document.getElementById('files');
+      const fileSizeError = document.getElementById('fileSizeError');
+      const uploadButton = document.getElementById('uploadButton');
+      const maxSize = 5 * 1024 * 1024; // 5 MB
+
+      if (fileInput.files.length === 0) {
+        fileSizeError.textContent = '';
+        uploadButton.disabled = true;
+        return;
+      }
+
+      for (let i = 0; i < fileInput.files.length; i++) {
+        const file = fileInput.files[i];
+        if (file.size > maxSize) {
+          fileSizeError.textContent = 'El tamaño de uno o más archivos excede el límite permitido (5 MB).';
+          fileInput.value = ''; // Limpiar la selección de archivos
+          uploadButton.disabled = true;
+          return;
+        }
+      }
+
+      fileSizeError.textContent = '';
+      uploadButton.disabled = false;
+    }
+
+    function validateForm() {
+      return true;
+    }
+  </script>
+</body>
 </html>

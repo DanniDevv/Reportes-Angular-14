@@ -1,0 +1,23 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 100% del viewport height */
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+}
+h1 {
+  text-align: center;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input[type="file"] {
+  margin-bottom: 10px;
+}
